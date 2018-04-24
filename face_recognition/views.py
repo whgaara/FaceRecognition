@@ -30,4 +30,6 @@ def get_data(request=None):
 
 
 if __name__ == '__main__':
-    get_data()
+    # get_data()
+    from FaceRecognition.settings import IMG_PATH
+    file = IMG_PATH + '1.jpg'
