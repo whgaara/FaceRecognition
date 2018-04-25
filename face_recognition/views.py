@@ -10,7 +10,7 @@ django.setup()
 def get_data(request=None):
     result = {'data': '',
               'code': '200'}
-    img_path = settings.IMG_PATH
+    img_path = settings.IMG_BASE_PATH
     acupoints = format_logs()
     try:
         for i, file in enumerate(os.listdir(img_path)):
@@ -22,14 +22,36 @@ def get_data(request=None):
         result['data'] = acupoints
     except Exception as e:
         print(e)
-        result['code'] = '400'
-    # f = open('test.txt', 'w', encoding='utf-8')
-    # f.write(str(result))
-    # f.close()
+        result['code'] = '401'
     return JsonResponse(result)
 
 
+def operate(request):
+    result = {'data': '',
+              'code': '200'}
+    if (not request.POST) and (not request.POST['img']):
+        result['code'] = '400'
+        return JsonResponse(result)
+    else:
+        try:
+            img_bs64 = request.POST['img']
+            img = base64.b64decode(img_bs64)
+            pic_name = str(random.randint(1, 1000)) + '.jpg'
+            with open(settings.SOURCE_PATH + pic_name, 'wb') as f:
+                f.write(img)
+            operate_img(pic_name)
+
+            with open(settings.TARGET_PATH + pic_name, 'rb') as f:
+                img_data = f.read()
+                img_bs64 = base64.b64encode(img_data).decode('utf-8')
+                result['data'] = img_bs64
+            return JsonResponse(result)
+
+        except Exception as e:
+            print(e)
+            result['code'] = '401'
+            return JsonResponse(result)
+
+
 if __name__ == '__main__':
-    # get_data()
-    from FaceRecognition.settings import IMG_PATH
-    file = IMG_PATH + '1.jpg'
+    get_data()

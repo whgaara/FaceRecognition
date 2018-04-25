@@ -120,9 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-IMG_PATH = BASE_DIR + '\\face_recognition\static\img\\'
-TARGET_PATH = BASE_DIR + '\\face_recognition\static\img\\result\\'
+IMG_BASE_PATH = BASE_DIR + '\\face_recognition\static\img\img_base\\'
+TARGET_PATH = BASE_DIR + '\\face_recognition\static\img\img_result\\'
+SOURCE_PATH = BASE_DIR + '\\face_recognition\static\img\img_source\\'
 LOG_PATH = BASE_DIR + '\\face_recognition\static\log\\'
-
-IMG_TYPE = '.jpg', '.JPG', 'png', 'PNG'
-
