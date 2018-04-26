@@ -1,5 +1,6 @@
 # coding: utf-8
 import base64
+import json
 from django.http import JsonResponse
 from face_recognition.common import *
 
@@ -23,6 +24,9 @@ def get_data(request=None):
     except Exception as e:
         print(e)
         result['code'] = '401'
+    with open('test.txt', 'w', encoding='utf-8') as f:
+        f.write(json.dumps(result, ensure_ascii=False))
+
     return JsonResponse(result)
 
 
