@@ -20,8 +20,8 @@ def format_logs():
         acupoints_dict = {}
         for acupoint in acupoints:
             acu_attrs = acupoint.split(',')
-            acu_attrs_x = str(float(acu_attrs[1]) + eyes_point[index][0])
-            acu_attrs_y = str(float(acu_attrs[2]) + eyes_point[index][1])
+            acu_attrs_x = str(float((float(acu_attrs[1]) + eyes_point[index][0]) * 502 / 1000))
+            acu_attrs_y = str(float((float(acu_attrs[2]) + eyes_point[index][1]) * 502 / 1000))
             acupoints_dict[acu_attrs[0]] = acu_attrs_x + ' ' + acu_attrs_y
         acupoints_list.append(acupoints_dict)
         f.close()
@@ -40,14 +40,6 @@ def origin_point(img_name):
         if len(eyes):
             for (x, y, w, h) in eyes:
                 if w >= 70 and h >= 70:
-                    # new_x = int(x)
-                    # new_w = min(int((x + w)), img.shape[1])
-                    # new_y = int(y)
-                    # new_h = min(int((y + h)), img.shape[0])
-                    # f = cv2.resize(img[new_y:new_h, new_x:new_w], (new_w - new_x, new_h - new_y))
-                    # cv2.imwrite(settings.TARGET_PATH + '\\' + '%s.jpg' % count, f)
-                    # count += 1
-                    # print(x, y, w, h)
                     eyes_coords.append((x, y))
 
     x = (eyes_coords[0][0] + eyes_coords[1][0]) / 2.0
@@ -81,4 +73,4 @@ def operate_img(img_name):
 
 if __name__ == '__main__':
     format_logs()
-    # print(origin_point('1.jpg'))
+    # print(origin_point('0.jpg'))

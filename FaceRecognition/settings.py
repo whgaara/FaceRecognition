@@ -36,12 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'face_recognition'
+    'corsheaders',
+    'face_recognition',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,3 +128,9 @@ SOURCE_PATH = BASE_DIR + '\\face_recognition\static\img\img_source\\'
 LOG_PATH = BASE_DIR + '\\face_recognition\static\log\\'
 ACU_NAME_PATH = BASE_DIR + '\\face_recognition\static\\acupoint'
 STATIC_PATH = BASE_DIR + '\\face_recognition\static\\'
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    '*'
+)
