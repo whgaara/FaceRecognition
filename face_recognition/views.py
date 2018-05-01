@@ -21,11 +21,22 @@ def get_data(request=None):
             acupoints[i]['data'] = image_b64
             f.close()
         result['data'] = acupoints
+
+        with open(settings.ACU_NAME_PATH, 'r', encoding='utf-8') as f:
+            acupoint_name = {}
+            while True:
+                line = f.readline()
+                if not line:
+                    break
+                line = line.split(',')
+                names = ''
+                for i in range(1, len(line)):
+                    names += line[i] + ' '
+                acupoint_name[line[0]] = names
+            result['acupoint_name'] = acupoint_name
     except Exception as e:
         print(e)
         result['code'] = '401'
-    with open('test.txt', 'w', encoding='utf-8') as f:
-        f.write(json.dumps(result, ensure_ascii=False))
 
     return JsonResponse(result)
 
