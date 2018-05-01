@@ -7,11 +7,11 @@ from FaceRecognition import settings
 
 def format_logs():
     index = 0
-    eyes_point = []
+    # eyes_point = []
     acupoints_list = []
 
-    for img_file in os.listdir(settings.IMG_BASE_PATH):
-        eyes_point.append(origin_point(img_file))
+    # for img_file in os.listdir(settings.IMG_BASE_PATH):
+    #     eyes_point.append(origin_point(img_file))
 
     for log_file in os.listdir(settings.LOG_PATH):
         f = open(settings.LOG_PATH + log_file, 'r', encoding='utf_8_sig')
@@ -54,7 +54,7 @@ def operate_img(img_name):
         image_path = settings.SOURCE_PATH + img_name
 
         count = 1
-        face_cascade = cv2.CascadeClassifier('static/classify/haarcascade_frontalface_default.xml')
+        face_cascade = cv2.CascadeClassifier(settings.STATIC_PATH + 'classify/haarcascade_frontalface_default.xml')
         img = cv2.imread(image_path)
         if type(img) != str:
             faces = face_cascade.detectMultiScale(img, 1.1, 5)
@@ -66,7 +66,7 @@ def operate_img(img_name):
                         new_y = int(y)
                         new_h = min(int((y + h)), img.shape[0])
                         f = cv2.resize(img[new_y:new_h, new_x:new_w], (new_w - new_x, new_h - new_y))
-                        cv2.imwrite(settings.TARGET_PATH + '\\' + '%s.jpg' % img_name, f)
+                        cv2.imwrite(settings.TARGET_PATH + '\\' + '%s' % img_name, f)
                         count += 1
     except IOError:
         print("Error")
