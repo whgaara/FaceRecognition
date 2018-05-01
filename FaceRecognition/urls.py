@@ -20,5 +20,6 @@ from face_recognition import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^img/', views.get_data),
-    url(r'^operate/', views.operate)
+    url(r'^operate/', views.operate),
+    url(r'^index/', views.index)
 ]

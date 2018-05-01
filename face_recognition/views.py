@@ -3,12 +3,20 @@ import base64
 import json
 import math
 from django.http import JsonResponse
+from django.template.response import TemplateResponse
 from django.views.decorators.csrf import csrf_exempt
 from face_recognition.common import *
 
 import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'FaceRecognition.settings')
 django.setup()
+
+
+def index(request):
+    template_url = settings.BASE_DIR + '\\face_recognition\\template\index.html'
+    # housemade_static_path = settings.STATIC_PATH + 'js'
+    return TemplateResponse(request, template_url)
+
 
 def get_data(request=None):
     result = {'data': '',
