@@ -19,10 +19,11 @@ def format_logs():
         acupoints = log_data.split('\n')
         acupoints_dict = {}
         for acupoint in acupoints:
-            acu_attrs = acupoint.split(',')
-            acu_attrs_x = str(float((float(acu_attrs[1]) + eyes_point[index][0]) * 502 / 1000))
-            acu_attrs_y = str(float((float(acu_attrs[2]) + eyes_point[index][1]) * 502 / 1000))
-            acupoints_dict[acu_attrs[0]] = acu_attrs_x + ' ' + acu_attrs_y
+            acu_attrs = acupoint.split(',', 1)
+            # acu_attrs_x = str(float((float(acu_attrs[1]) + eyes_point[index][0]) * 502 / 1000))
+            # acu_attrs_y = str(float((float(acu_attrs[2]) + eyes_point[index][1]) * 502 / 1000))
+            # acupoints_dict[acu_attrs[0]] = acu_attrs_x + ' ' + acu_attrs_y
+            acupoints_dict[acu_attrs[0]] = acu_attrs[1]
         acupoints_list.append(acupoints_dict)
         f.close()
         index += 1

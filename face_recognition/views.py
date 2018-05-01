@@ -28,11 +28,11 @@ def get_data(request=None):
                 line = f.readline()
                 if not line:
                     break
-                line = line.split(',')
-                names = ''
-                for i in range(1, len(line)):
-                    names += line[i] + ' '
-                acupoint_name[line[0]] = names
+                line = line.split(',', 1)
+                # names = ''
+                # for i in range(1, len(line)):
+                #     names += line[i] + ' '
+                acupoint_name[line[0]] = line[1]
             result['acupoint_name'] = acupoint_name
     except Exception as e:
         print(e)
