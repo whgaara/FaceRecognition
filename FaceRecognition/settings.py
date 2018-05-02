@@ -56,7 +56,7 @@ ROOT_URLCONF = 'FaceRecognition.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '\\face_recognition\\template')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/').replace('\\', '/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,9 +120,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'face_recognition\static'),
-)
 
 IMG_BASE_PATH = BASE_DIR + '\\face_recognition\static\img\img_base\\'
 TARGET_PATH = BASE_DIR + '\\face_recognition\static\img\img_result\\'

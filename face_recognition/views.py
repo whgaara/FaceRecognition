@@ -13,9 +13,8 @@ django.setup()
 
 
 def index(request):
-    template_url = settings.BASE_DIR + '\\face_recognition\\template\index.html'
-    # housemade_static_path = settings.STATIC_PATH + 'js'
-    return TemplateResponse(request, template_url)
+    template_url = os.path.join(settings.BASE_DIR, 'templates/index.html').replace('\\', '/')
+    return TemplateResponse(request, template_url, {})
 
 
 def get_data(request=None):
@@ -31,16 +30,6 @@ def get_data(request=None):
             acupoints[i]['data'] = image_b64
             f.close()
         result['data'] = acupoints
-
-        # with open(settings.ACU_NAME_PATH, 'r', encoding='utf-8') as f:
-        #     acupoint_name = {}
-        #     while True:
-        #         line = f.readline()
-        #         if not line:
-        #             break
-        #         line = line.split(',', 1)
-        #         acupoint_name[line[0]] = line[1]
-        #     result['acupoint_name'] = acupoint_name
     except Exception as e:
         print(e)
         result['code'] = '401'
