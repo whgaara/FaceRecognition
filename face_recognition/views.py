@@ -33,25 +33,27 @@ def get_data(request=None):
     except Exception as e:
         print(e)
         result['code'] = '401'
-
+    print('success!')
+    # with open('test.txt', 'w', encoding='utf-8') as f:
+    #     f.write(json.dumps(result, ensure_ascii=False))
     return JsonResponse(result)
 
 
 @csrf_exempt
 def operate(request):
     template = {
-        '承泣': '136,235',
-        '睛明': '173,190',
-        '球后': '112,221',
-        '上明': '133,147',
-        '健明': '159,224',
-        '攒竹': '167,146',
-        '丝竹空': '92,147',
-        '阳白': '129,107',
-        '地仓': '137,390',
-        '迎香': '159,311',
-        '印堂': '211,145',
-        '上迎香': '172,268'
+        u'承泣': '0.32015, 0.446',
+        u'睛明': '0.40982, 0.37646',
+        u'球后': '0.27016, 0.43642',
+        u'上明': '0.32213, 0.29613',
+        u'健明': '0.38414, 0.4386',
+        u'攒竹': '0.39939, 0.29007',
+        u'丝竹空': '0.21906, 0.28885',
+        u'阳白': '0.30862, 0.18586',
+        u'地仓': '0.31669, 0.76243',
+        u'迎香': '0.37602, 0.60777',
+        u'印堂': '0.50281, 0.28667',
+        u'上迎香': '0.41335, 0.52944'
     }
     result = {'data': '',
               'code': '200'}
@@ -81,22 +83,18 @@ def operate(request):
                         for (x, y, w, h) in eyes:
                             if w >= 70 and h >= 70:
                                 eyes_coords.append((x, y))
-                # dis = float(eyes_coords[1][0] - eyes_coords[0][0])
-                # print(eyes_coords)
                 angle = math.atan((eyes_coords[1][1]-eyes_coords[0][1])/(eyes_coords[1][0]-eyes_coords[0][0]))
-                processed_data = {
-
-                }
-                for key in template:
-                    values = template[key].split(',')
-                    x = float(values[0]) * math.cos(angle) + float(values[1]) * math.sin(angle)
-                    y = float(values[1]) * math.cos(angle) - float(values[0]) * math.sin(angle)
-                    processed_data[key] = str(x) + ',' + str(y)
+                processed_data = template
+                # for key in template:
+                #     values = template[key].split(',')
+                #     x = float(values[0]) * math.cos(angle) + float(values[1]) * math.sin(angle)
+                #     y = float(values[1]) * math.cos(angle) - float(values[0]) * math.sin(angle)
+                #     processed_data[key] = str(x) + ',' + str(y)
                 data_list = []
                 processed_data['data'] = img_bs64
                 data_list.append(processed_data)
                 result['data'] = data_list
-                # result['data'] = img_bs64
+                print(result)
             return JsonResponse(result)
 
         except Exception as e:

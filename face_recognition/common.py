@@ -12,6 +12,8 @@ def format_logs():
 
     # for img_file in os.listdir(settings.IMG_BASE_PATH):
     #     eyes_point.append(origin_point(img_file))
+    #
+    # print(eyes_point)
 
     for log_file in os.listdir(settings.LOG_PATH):
         f = open(settings.LOG_PATH + log_file, 'r', encoding='utf_8_sig')
@@ -19,16 +21,37 @@ def format_logs():
         acupoints = log_data.split('\n')
         acupoints_dict = {}
         for acupoint in acupoints:
+            if acupoint == '':
+                continue
             acu_attrs = acupoint.split(',', 1)
-            # acu_attrs_x = str(float((float(acu_attrs[1]) + eyes_point[index][0]) * 502 / 1000))
-            # acu_attrs_y = str(float((float(acu_attrs[2]) + eyes_point[index][1]) * 502 / 1000))
-            # acupoints_dict[acu_attrs[0]] = acu_attrs_x + ' ' + acu_attrs_y
-            acupoints_dict[acu_attrs[0]] = acu_attrs[1]
+            coord = coord_to_scale(acu_attrs[1], log_file)
+            acupoints_dict[acu_attrs[0]] = coord
+            # break
         acupoints_list.append(acupoints_dict)
         f.close()
         index += 1
-
+    # print(acupoints_list)
     return acupoints_list
+
+
+def coord_to_scale(data, log_file):
+    img_file = log_file[:-4]
+    tmp = data.split(',')
+    ox = float(tmp[0])
+    oy = float(tmp[1])
+
+    zero_x, zero_y, unit = origin_point(img_file)
+
+    img = cv2.imread(settings.IMG_BASE_PATH + img_file)
+    height = img.shape[0]
+    width = img.shape[1]
+
+    x_scale = round((ox * unit + zero_x)/width, 5)
+    y_scale = round((zero_y + oy * unit + 50)/height, 5)
+
+    # print(x_scale, y_scale)
+
+    return x_scale, y_scale
 
 
 def origin_point(img_name):
@@ -37,16 +60,18 @@ def origin_point(img_name):
     face_cascade = cv2.CascadeClassifier(settings.STATIC_PATH + 'classify/haarcascade_eye.xml')
     img = cv2.imread(image_path)
     if type(img) != str:
-        eyes = face_cascade.detectMultiScale(img, 1.1, 5)
+        eyes = face_cascade.detectMultiScale(img, 1.1, 9)
         if len(eyes):
             for (x, y, w, h) in eyes:
                 if w >= 70 and h >= 70:
-                    eyes_coords.append((x, y))
+                    eyes_coords.append((x + w/2, y))
 
     x = (eyes_coords[0][0] + eyes_coords[1][0]) / 2.0
     y = (eyes_coords[0][1] + eyes_coords[1][1]) / 2.0
 
-    return x, y
+    unit = abs(eyes_coords[0][0] - eyes_coords[1][0]) / 80.0
+
+    return x, y, unit
 
 
 def operate_img(img_name):
