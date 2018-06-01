@@ -26,7 +26,7 @@ def format_logs():
             acu_attrs = acupoint.split(',', 1)
             coord = coord_to_scale(acu_attrs[1], log_file)
             acupoints_dict[acu_attrs[0]] = coord
-            # break
+            print(acupoints_dict)
         acupoints_list.append(acupoints_dict)
         f.close()
         index += 1
