@@ -891,8 +891,10 @@ function calculateScore(inputs, nameList) {
             const coordination = face[nameList[j]];
             // const coords = coordination.split(',');
             const coords = coordination;
-            const x = parseInt(coords[0]);
-            const y = parseInt(coords[1]);
+            // const x = parseInt(coords[0]);
+            // const y = parseInt(coords[1]);
+            const x = coords[0] * imageRect.size.x * state.pixelRatio;
+            const y = imageRect.size.y * coords[1] * state.pixelRatio;
             const distance = inputPosition.clone().sub(new Vector2_1.Vector2(x, y)).len();
             if (distance < mint) {
                 mint = distance;
