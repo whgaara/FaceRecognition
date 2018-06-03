@@ -8,13 +8,7 @@ from FaceRecognition import settings
 
 def format_logs():
     index = 0
-    # eyes_point = []
     acupoints_list = []
-
-    # for img_file in os.listdir(settings.IMG_BASE_PATH):
-    #     eyes_point.append(origin_point(img_file))
-    #
-    # print(eyes_point)
 
     for log_file in os.listdir(settings.LOG_PATH):
         f = open(settings.LOG_PATH + log_file, 'r', encoding='utf_8_sig')
@@ -65,8 +59,6 @@ def coord_to_scale(data, log_file):
 
     x_scale = round((ox * unit + zero_x)/width, 5)
     y_scale = round((zero_y + oy * unit + 50)/height, 5)
-
-    # print(x_scale, y_scale)
 
     return x_scale, y_scale
 
@@ -155,7 +147,8 @@ def sqrt(point1, point2):
 
 if __name__ == '__main__':
     # format_logs()
-    format_log('2.jpg.log')
+    # format_log('2.jpg.log')
     # get_similar((200, 180))
     # sqrt((1, 2), (3.3, 5.5))
     # print(origin_point('0.jpg'))
+    operate_img('22.jpg')
